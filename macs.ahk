@@ -50,7 +50,7 @@
     LastRightClick := 0
 
     loopstopper := true ; Initialize loopstopper to 1
-    loopcontrol := false ; Initialize loopcontrol to 1 
+    loopcontrol := false ; Initialize loopcontrol to 1
 
     ;----------------------------------------------------------------------
     ; The following are used for fast ctrl-click from the Inventory screen
@@ -356,7 +356,7 @@
     return
 
     ClickLoop:
-      Send, ^{LButton}
+        Send, ^{LButton}
     Return
     ;----------------------------------------------------------------------
     ; MINE REDUX
@@ -365,9 +365,9 @@
     Numpad6:: ; Deactivate the loop when Numpad6 is pressed
         loopcontrol := not loopcontrol
         if not loopcontrol {
-            ToolTip, Inactive
+            ToolTip, "Mine: Inactive"
         } else {
-            ToolTip, Active
+            ToolTip, "Mine: Active"
         }
         SetTimer, RemoveToolTip, -2000
     return
@@ -387,7 +387,7 @@
         if loopcontrol {
             loopstopper := false
             Send, {SPACE}
-            SetTimer, SendSpaceLoop, 5
+            SetTimer, SendSpaceLoop, 10
         }
     return
 
@@ -404,21 +404,21 @@
 
     F5:: Suspend
 
-    ;----------------------------------------------------------------------
-    ; Smoke Mine REDUX
-    ;----------------------------------------------------------------------
+;----------------------------------------------------------------------
+; Smoke Mine REDUX
+;----------------------------------------------------------------------
 
-    ;~t::SmokeMine() ;
+;~t::SmokeMine() ;
 
-    ;SmokeMine(){
-    ;if WinActive("Path of Exile")
-    ;		{
-    ;		Sleep 200
-    ;		Send, {space}
-    ;		Sleep 100
-    ;		Send, {space}
-    ;		Sleep 100
-    ;		Send, {space}
-    ;		return
-    ;		}
-    ;}
+;SmokeMine(){
+;if WinActive("Path of Exile")
+;		{
+;		Sleep 200
+;		Send, {space}
+;		Sleep 100
+;		Send, {space}
+;		Sleep 100
+;		Send, {space}
+;		return
+;		}
+;}
