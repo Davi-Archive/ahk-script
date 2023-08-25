@@ -30,16 +30,16 @@
     ;
     ; Note: Delete the last line (["e"]), or set value to 0, if you don't use a buff skill
     ;----------------------------------------------------------------------
-    FlaskDurationInit[1] := 1500
-    FlaskDurationInit[2] := 5300
-    FlaskDurationInit[3] := 5300
-    FlaskDurationInit[4] := 5800
+    FlaskDurationInit[1] := 4400
+    FlaskDurationInit[2] := 7200
+    FlaskDurationInit[3] := 7200
+    FlaskDurationInit[4] := 7200
     FlaskDurationInit[5] := 7000
     FlaskDurationInit["e"] := 0		; I use Steelskin here
     FlaskDurationInit["r"] := 0		; I use Molten Shell here
     FlaskDurationInit[","] := 0		; Segunda Barra
     FlaskDurationInit["x"] := 0		; Segunda Barra
-    FlaskDurationInit["."] := 0		; Segunda Barra
+    FlaskDurationInit["."] := 7000		; Segunda Barra
     FlaskDurationInit["{Numpad2}"] := 0 ; Segunda Barra
     FlaskDurationInit["{Numpad1}"] := 0	; Segunda Barra
 
@@ -365,9 +365,9 @@
     Numpad6:: ; Deactivate the loop when Numpad6 is pressed
         loopcontrol := not loopcontrol
         if not loopcontrol {
-            ToolTip, "Mine: Inactive"
+            ToolTip, Mine: Inactive
         } else {
-            ToolTip, "Mine: Active"
+            ToolTip, Mine: Active
         }
         SetTimer, RemoveToolTip, -2000
     return
@@ -378,23 +378,31 @@
             Random, VariableDelay, 0, 30
             Sleep, %VariableDelay%
             Send, {SPACE}
-            Sleep, %VariableDelay%
-            Send, {SPACE}
         }
+    return
+
+    SendFinishSpaceLoopTime:
+        Random, VariableDelay, 0, 30
+        Sleep, %VariableDelay%
+        Send, {SPACE}
+        if (A_TickCount - spaceStartTime >= 2000) ; 2000 milliseconds (2 seconds)
+            SetTimer, SendFinishSpaceLoopTime, Off
     return
 
     ~f:: ; Start the loop when F is held down
         if loopcontrol {
             loopstopper := false
             Send, {SPACE}
-            SetTimer, SendSpaceLoop, 10
+            SetTimer, SendSpaceLoop, 15
         }
     return
 
     ~f up:: ; Stop the loop when F is released
         if loopcontrol {
-            loopstopper := true
             SetTimer, SendSpaceLoop, Off
+            spaceStartTime := A_TickCount
+            SetTimer, SendFinishSpaceLoopTime, On
+            loopstopper := true
         }
     return
 
